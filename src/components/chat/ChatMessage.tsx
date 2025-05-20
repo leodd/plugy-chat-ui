@@ -28,7 +28,7 @@ const ChatMessage = ({ message, isUser, name = 'AI' }: ChatMessageProps) => {
               : 'bg-gray-100 text-gray-900 border border-gray-200'
           }`}
         >
-          {message}
+          {message.trim()}
         </div>
       </div>
     </div>

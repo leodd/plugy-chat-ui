@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
+import ArrowDown from '../icons/ArrowDown';
 
 interface Message {
   id: string;
@@ -19,6 +20,34 @@ const ChatPage = () => {
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const checkScrollPosition = () => {
+    if (messagesContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
+      const isAtBottom = scrollHeight - scrollTop - clientHeight < 500;
+      const lastMessageIsAI = messages.length > 0 && !messages[messages.length - 1].isUser;
+      setShowScrollButton(!isAtBottom && lastMessageIsAI);
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', checkScrollPosition);
+      return () => container.removeEventListener('scroll', checkScrollPosition);
+    }
+  }, [messages]);
 
   const handleSendMessage = async (content: string) => {
     // Add user message
@@ -54,17 +83,54 @@ const ChatPage = () => {
 
   return (
     <div className="h-screen flex flex-col relative">
-      <div className="flex-1 overflow-auto p-4 pb-24">
+      <div 
+        ref={messagesContainerRef} 
+        className="flex-1 overflow-auto p-4 pb-24
+          [&::-webkit-scrollbar]:w-2
+          [&::-webkit-scrollbar-track]:bg-transparent
+          [&::-webkit-scrollbar-thumb]:bg-gray-200
+          [&::-webkit-scrollbar-thumb]:rounded-full
+          [&::-webkit-scrollbar-thumb]:hover:bg-gray-300
+          [-ms-overflow-style:none]
+          [scrollbar-width:thin]
+          [scrollbar-color:rgb(229,231,235)_transparent]
+        "
+      >
         {messages.map((message) => (
           <ChatMessage
             key={message.id}
             message={message.content}
             isUser={message.isUser}
-            timestamp={message.timestamp}
           />
         ))}
+        <div ref={messagesEndRef} />
       </div>
-      <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent">
+        <div 
+          className={`absolute left-1/2 -translate-x-1/2 -top-12 transition-all duration-300 ${showScrollButton ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'}`}
+        >
+          <button
+            onClick={scrollToBottom}
+            className={`
+              p-2
+              rounded-full
+              bg-white
+              shadow-[0_0_20px_rgba(59,130,246,0.2)]
+              border
+              border-gray-200
+              text-blue-500
+              hover:bg-gray-50
+              transition-all
+              duration-200
+              hover:scale-110
+              active:scale-95
+            `}
+          >
+            <ArrowDown className="w-5 h-5" />
+          </button>
+        </div>
+        <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />
+      </div>
     </div>
   );
 };
