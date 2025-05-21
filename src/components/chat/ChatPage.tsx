@@ -82,18 +82,21 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col relative">
+    <div className="h-screen flex flex-col relative bg-white dark:bg-neutral-900">
       <div 
         ref={messagesContainerRef} 
         className="flex-1 overflow-auto p-4 pb-24
           [&::-webkit-scrollbar]:w-2
           [&::-webkit-scrollbar-track]:bg-transparent
-          [&::-webkit-scrollbar-thumb]:bg-gray-200
+          [&::-webkit-scrollbar-thumb]:bg-neutral-200
+          [&::-webkit-scrollbar-thumb]:dark:bg-neutral-700
           [&::-webkit-scrollbar-thumb]:rounded-full
-          [&::-webkit-scrollbar-thumb]:hover:bg-gray-300
+          [&::-webkit-scrollbar-thumb]:hover:bg-neutral-300
+          [&::-webkit-scrollbar-thumb]:dark:hover:bg-neutral-600
           [-ms-overflow-style:none]
           [scrollbar-width:thin]
           [scrollbar-color:rgb(229,231,235)_transparent]
+          dark:[scrollbar-color:rgb(64,64,64)_transparent]
         "
       >
         {messages.map((message) => (
@@ -105,28 +108,32 @@ const ChatPage = () => {
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent dark:from-neutral-900 dark:via-neutral-900">
         <div 
-          className={`absolute left-1/2 -translate-x-1/2 -top-12 transition-all duration-300 ${showScrollButton ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'}`}
+          className={`absolute left-1/2 -translate-x-1/2 -top-7 transition-all duration-300 ${showScrollButton ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'}`}
         >
           <button
             onClick={scrollToBottom}
             className={`
-              p-2
+              p-1.5
               rounded-full
               bg-white
-              shadow-[0_0_20px_rgba(59,130,246,0.2)]
+              dark:bg-neutral-800
+              shadow-[0_0_20px_var(--custom-primary-light)]
+              dark:shadow-[0_0_20px_var(--custom-primary-dark)]
               border
-              border-gray-200
-              text-blue-500
-              hover:bg-gray-50
+              border-[var(--custom-primary-light)]
+              dark:border-[var(--custom-primary-dark)]
+              text-[var(--custom-primary)]
+              hover:bg-neutral-50
+              dark:hover:bg-neutral-700
               transition-all
               duration-200
               hover:scale-110
               active:scale-95
             `}
           >
-            <ArrowDown className="w-5 h-5" />
+            <ArrowDown className="w-4 h-4" />
           </button>
         </div>
         <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />

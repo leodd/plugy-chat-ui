@@ -16,7 +16,7 @@ const ChatInput = ({ onSendMessage, disabled = false }: ChatInputProps) => {
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = 'auto';
-      const newHeight = Math.min(textarea.scrollHeight, 200); // max height of 200px
+      const newHeight = Math.min(textarea.scrollHeight, 200);
       textarea.style.height = `${newHeight}px`;
     }
   };
@@ -43,34 +43,50 @@ const ChatInput = ({ onSendMessage, disabled = false }: ChatInputProps) => {
     }
   };
 
+  const getInputStyles = () => {
+    return `
+      block w-full
+      px-4 py-2 pr-12
+      min-h-[46px]
+      border-2
+      rounded-[23px]
+      bg-white/60 dark:bg-neutral-800/60
+      text-neutral-900 dark:text-neutral-50
+      placeholder-neutral-400 dark:placeholder-neutral-500
+      resize-none
+      overflow-y-auto
+      [&::-webkit-scrollbar]:hidden
+      [-ms-overflow-style:none]
+      [scrollbar-width:none]
+      transition-[height,border]
+      duration-200
+      focus:outline-none
+      disabled:cursor-not-allowed
+      backdrop-blur-sm
+      border-[var(--custom-primary-light)]
+      focus:border-[var(--custom-primary)]
+      shadow-[0_0_20px_var(--custom-primary-light)]
+      focus:shadow-[0_0_20px_var(--custom-primary-lighter)]
+      dark:border-[var(--custom-primary-dark)]
+      dark:focus:border-[var(--custom-primary)]
+      dark:shadow-[0_0_20px_var(--custom-primary-dark)]
+      dark:focus:shadow-[0_0_20px_var(--custom-primary)]
+    `;
+  };
+
+  const getButtonStyles = () => {
+    if (disabled || !message.trim()) {
+      return 'bg-[var(--custom-primary-light)] dark:bg-[var(--custom-primary-dark)] text-[var(--custom-primary)]/40 dark:text-[var(--custom-primary)]/60 cursor-not-allowed';
+    }
+    return 'bg-[var(--custom-primary)] text-white hover:bg-[var(--custom-primary-dark)] dark:hover:bg-[var(--custom-primary)]';
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="relative flex-1">
         <textarea
           ref={textareaRef}
-          className={`
-            block w-full
-            px-4 py-2 pr-12
-            min-h-[46px]
-            border-2 border-blue-200
-            shadow-[0_0_20px_rgba(59,130,246,0.2)]
-            focus:border-2 focus:border-blue-300
-            focus:shadow-[0_0_20px_rgba(59,130,246,0.3)]
-            rounded-[23px]
-            bg-gray-100/60
-            text-gray-900
-            placeholder-gray-400
-            resize-none
-            overflow-y-auto
-            [&::-webkit-scrollbar]:hidden
-            [-ms-overflow-style:none]
-            [scrollbar-width:none]
-            transition-[height,border]
-            duration-200
-            focus:outline-none
-            disabled:cursor-not-allowed
-            backdrop-blur-sm
-          `}
+          className={getInputStyles()}
           placeholder="Type your message..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
@@ -84,10 +100,7 @@ const ChatInput = ({ onSendMessage, disabled = false }: ChatInputProps) => {
         <button
           type="submit"
           disabled={disabled || !message.trim()}
-          className={`absolute right-[7px] bottom-[7px] p-2 rounded-full transition-all duration-200 ${disabled || !message.trim()
-              ? 'bg-blue-100 text-blue-400 cursor-not-allowed'
-              : 'bg-blue-500 text-white hover:bg-blue-600'
-            }`}
+          className={`absolute right-[7px] bottom-[7px] p-2 rounded-full transition-all duration-200 ${getButtonStyles()}`}
         >
           {disabled || !message.trim() ? (
             <AirplaneOutlined className="w-4 h-4" />

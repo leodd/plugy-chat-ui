@@ -1,10 +1,15 @@
+import { ThemeProvider } from './contexts/ThemeContext';
+import { ThemeSwitcher } from './components/ThemeSwitcher';
 import ChatPage from './components/chat/ChatPage';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <ChatPage />
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 transition-colors duration-200">
+        <ThemeSwitcher />
+        <ChatPage />
+      </div>
+    </ThemeProvider>
   );
 }
 
