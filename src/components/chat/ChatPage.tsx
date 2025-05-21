@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import type { ChatInputRef } from './ChatInput';
+import LoadingMessage from './LoadingMessage';
 import ArrowDown from '../icons/ArrowDown';
 
 interface Message {
@@ -112,6 +113,7 @@ const ChatPage = () => {
             isUser={message.isUser}
           />
         ))}
+        {isLoading && <LoadingMessage />}
         <div ref={messagesEndRef} />
       </div>
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent dark:from-neutral-900 dark:via-neutral-900">
