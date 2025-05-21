@@ -40,6 +40,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     // Set CSS variables for custom colors
     document.documentElement.style.setProperty('--custom-primary', customColor);
+    document.documentElement.style.setProperty('--custom-primary-neutral', `${customColor}50`);
     document.documentElement.style.setProperty('--custom-primary-light', `${customColor}20`);
     document.documentElement.style.setProperty('--custom-primary-lighter', `${customColor}10`);
     document.documentElement.style.setProperty('--custom-primary-dark', `${customColor}90`);

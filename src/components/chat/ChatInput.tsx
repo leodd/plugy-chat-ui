@@ -50,9 +50,10 @@ const ChatInput = ({ onSendMessage, disabled = false }: ChatInputProps) => {
       min-h-[46px]
       border-2
       rounded-[23px]
-      bg-white/60 dark:bg-neutral-800/60
-      text-neutral-900 dark:text-neutral-50
-      placeholder-neutral-400 dark:placeholder-neutral-500
+      bg-gray-50/60 dark:bg-neutral-800/60
+      text-neutral-600 dark:text-neutral-200
+      placeholder:font-medium
+      placeholder-neutral-300 dark:placeholder-neutral-700
       resize-none
       overflow-y-auto
       [&::-webkit-scrollbar]:hidden
@@ -63,22 +64,36 @@ const ChatInput = ({ onSendMessage, disabled = false }: ChatInputProps) => {
       focus:outline-none
       disabled:cursor-not-allowed
       backdrop-blur-sm
-      border-[var(--custom-primary-light)]
-      focus:border-[var(--custom-primary)]
-      shadow-[0_0_20px_var(--custom-primary-light)]
-      focus:shadow-[0_0_20px_var(--custom-primary-lighter)]
-      dark:border-[var(--custom-primary-dark)]
-      dark:focus:border-[var(--custom-primary)]
-      dark:shadow-[0_0_20px_var(--custom-primary-dark)]
-      dark:focus:shadow-[0_0_20px_var(--custom-primary)]
+      border-[var(--custom-primary-neutral)]
+      focus:border-[var(--custom-primary-dark)]
+      shadow-[0_0_20px_var(--custom-primary-neutral)]
+      focus:shadow-[0_0_20px_var(--custom-primary-neutral)]
+      dark:border-[var(--custom-primary-neutral)]
+      dark:focus:border-[var(--custom-primary-dark)]
+      dark:shadow-[0_0_20px_var(--custom-primary-neutral)]
+      dark:focus:shadow-[0_0_20px_var(--custom-primary-neutral)]
+      caret-[var(--custom-primary)]
+      dark:caret-[var(--custom-primary)]
     `;
   };
 
   const getButtonStyles = () => {
-    if (disabled || !message.trim()) {
-      return 'bg-[var(--custom-primary-light)] dark:bg-[var(--custom-primary-dark)] text-[var(--custom-primary)]/40 dark:text-[var(--custom-primary)]/60 cursor-not-allowed';
-    }
-    return 'bg-[var(--custom-primary)] text-white hover:bg-[var(--custom-primary-dark)] dark:hover:bg-[var(--custom-primary)]';
+    const isDisabled = disabled || !message.trim();
+
+    return isDisabled
+      ? `
+          bg-[var(--custom-primary-light)]
+          dark:bg-[var(--custom-primary-dark)]
+          text-[var(--custom-primary-dark)]
+          dark:text-[var(--custom-primary)]
+          cursor-not-allowed
+        `
+      : `
+          bg-[var(--custom-primary)]
+          text-white/80
+          hover:bg-[var(--custom-primary-dark)]
+          dark:hover:bg-[var(--custom-primary)]
+        `;
   };
 
   return (
@@ -100,7 +115,16 @@ const ChatInput = ({ onSendMessage, disabled = false }: ChatInputProps) => {
         <button
           type="submit"
           disabled={disabled || !message.trim()}
-          className={`absolute right-[7px] bottom-[7px] p-2 rounded-full transition-all duration-200 ${getButtonStyles()}`}
+          className={`
+            absolute 
+            right-[7px] 
+            bottom-[7px] 
+            p-2 
+            rounded-full 
+            transition-all 
+            duration-200 
+            ${getButtonStyles()}
+          `}
         >
           {disabled || !message.trim() ? (
             <AirplaneOutlined className="w-4 h-4" />

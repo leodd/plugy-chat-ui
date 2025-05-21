@@ -117,14 +117,15 @@ const ChatPage = () => {
             className={`
               p-1.5
               rounded-full
-              bg-white
+              bg-gray-50
               dark:bg-neutral-800
-              shadow-[0_0_20px_var(--custom-primary-light)]
-              dark:shadow-[0_0_20px_var(--custom-primary-dark)]
+              shadow-lg
+              dark:shadow-lg
               border
-              border-[var(--custom-primary-light)]
-              dark:border-[var(--custom-primary-dark)]
-              text-[var(--custom-primary)]
+              border-neutral-200
+              dark:border-neutral-700
+              text-neutral-500
+              dark:text-neutral-300
               hover:bg-neutral-50
               dark:hover:bg-neutral-700
               transition-all
