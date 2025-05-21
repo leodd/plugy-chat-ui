@@ -1,13 +1,27 @@
-# React TypeScript Project
+# Plugy Chat UI
 
-This is a modern React application built with TypeScript and Vite.
+An open-source, modern chatbot interface built with React, TypeScript, and Vite. This project provides a sleek and responsive user interface for building and integrating chatbots into your applications.
 
 ## Features
 
-- ⚡️ React 18
-- 🔥 TypeScript
-- 🎨 ESLint + Prettier
+- ⚡️ React 18 for modern UI development
+- 🔥 TypeScript for type safety
+- 🎨 ESLint + Prettier for code quality
 - 📦 Vite for fast development and building
+- 💬 Modern chatbot interface components
+- 🎯 Responsive design
+- 🔌 Easy integration with any chatbot backend
+- 🎨 Customizable themes and styling
+- 🌐 Open source and free to use
+
+## Use Cases
+
+- Customer service chatbots
+- AI assistant interfaces
+- Support chat systems
+- Interactive Q&A bots
+- Educational chatbots
+- Any application requiring a chat interface
 
 ## Getting Started
 
@@ -50,57 +64,28 @@ src/
   └── vite-env.d.ts  # Vite type declarations
 ```
 
-# React + TypeScript + Vite
+## Development Setup
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project uses Vite with React and TypeScript. The following plugins are configured:
 
-Currently, two official plugins are available:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) for Fast Refresh
+- ESLint with TypeScript support
+- Prettier for code formatting
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Contributing
 
-## Expanding the ESLint configuration
+We welcome contributions! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ESLint Configuration
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+For production development, we recommend using type-aware lint rules. The project includes:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- TypeScript-specific ESLint rules
+- React-specific linting rules
+- Code style enforcement
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+See the ESLint configuration in the project for detailed setup.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
