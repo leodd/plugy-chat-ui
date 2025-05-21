@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import type { KeyboardEvent } from 'react';
 import AirplaneFilled from '../icons/AirplaneFilled';
 import AirplaneOutlined from '../icons/AirplaneOutlined';
@@ -8,9 +8,20 @@ interface ChatInputProps {
   disabled?: boolean;
 }
 
-const ChatInput = ({ onSendMessage, disabled = false }: ChatInputProps) => {
+export interface ChatInputRef {
+  focus: () => void;
+}
+
+const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(({ onSendMessage, disabled = false }, ref) => {
   const [message, setMessage] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      console.log('focusing');
+      textareaRef.current?.focus();
+    }
+  }));
 
   const adjustTextareaHeight = () => {
     const textarea = textareaRef.current;
@@ -135,6 +146,6 @@ const ChatInput = ({ onSendMessage, disabled = false }: ChatInputProps) => {
       </div>
     </form>
   );
-};
+});
 
 export default ChatInput; 

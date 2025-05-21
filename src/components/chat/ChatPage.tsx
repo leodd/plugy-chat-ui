@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
+import type { ChatInputRef } from './ChatInput';
 import ArrowDown from '../icons/ArrowDown';
 
 interface Message {
@@ -23,6 +24,7 @@ const ChatPage = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const chatInputRef = useRef<ChatInputRef>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -78,6 +80,10 @@ const ChatPage = () => {
       // Handle error appropriately
     } finally {
       setIsLoading(false);
+      // Focus back on the input after sending
+      setTimeout(() => {
+        chatInputRef.current?.focus();
+      }, 1);
     }
   };
 
@@ -137,7 +143,7 @@ const ChatPage = () => {
             <ArrowDown className="w-4 h-4" />
           </button>
         </div>
-        <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />
+        <ChatInput ref={chatInputRef} onSendMessage={handleSendMessage} disabled={isLoading} />
       </div>
     </div>
   );
